@@ -1,5 +1,6 @@
 import json
 import os
+import psycopg
 
 from flask import Flask
 
@@ -13,7 +14,7 @@ def divudacaoconta():
     arquivos = listarArquivos()
     return data
 
-#le os arquivos e os retorna em formato map
+#le os arquivos e os retorna em formato mapeado
 def lerJson(arquivo):
     with open(arquivo,'r',encoding='utf8') as f:
         return json.load(f)
