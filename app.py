@@ -12,7 +12,6 @@ path = "E:\\candidatos"
 @app.route('/politiciansdata')
 def divudacaoconta():
 
-    #nome = data.get("nomeUrna")
     arquivos = listarArquivos()
     return save(arquivos)
 
@@ -26,6 +25,7 @@ def listarArquivos():
     for _,_, arquivo in os.walk(path):
         return arquivo
 
+#faz a magia
 def save(arquivos):
     try:
         connection = psycopg2.connect(user="postgres",password="1816",host="localhost",port="5432",database="divugacaocontas")
@@ -95,8 +95,9 @@ def save(arquivos):
                       body.get("st_DIVULGA_ARQUIVOS"), body.get("st_DIVULGA_BENS"),
                       body.get("st_DIVULGA"), body.get("st_REELEICAO"))
             cursor.execute(sql,insert)
-
             connection.commit()
+
+
             cargo = body.get("cargo")
             sql = """INSERT INTO public.candidato_cargo(
                     id_candidato, id_cargo, sigla, codsuperior, titular, contagem)
