@@ -135,8 +135,9 @@ create table if not exists bens(
 -- fiquei na duvida por isso fiz 1,1
 create table if not exists eleicao(
 
-	ideleicao serial primary key,-- vinculo para tabela principal
+	ideleicao serial primary key,
 	id bigint,
+	id_candidato bigint, -- vinculo para tabela principal
 	siglaUF varchar(20),
 	localidadeSgUe varchar(20),
 	ano int,
@@ -234,13 +235,13 @@ create table if not exists candidatos(
 create table if not exists substituto(
 
    id serial primary key,
-   sqEleicao int,
-   sqCandidato int,
+   sqEleicao bigint,
+   sqCandidato bigint,
    sgUe varchar(20),
    nrAno int,
    nmCandidato varchar(70),
    url varchar(200),
-   id_Candidato INT
+   id_Candidato bigint
 );
 
 delete from candidatos;
@@ -249,3 +250,7 @@ delete from emails;
 delete from sites;
 delete from vice;
 delete from eleicoesanteriores;
+delete from bens;
+delete from eleicao;
+delete from arquivos;
+delete from substituto;

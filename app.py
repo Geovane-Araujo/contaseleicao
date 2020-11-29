@@ -14,7 +14,6 @@ def divudacaoconta():
 
     #nome = data.get("nomeUrna")
     arquivos = listarArquivos()
-    save(arquivos)
     return save(arquivos)
 
 #le os arquivos e os retorna em formato mapeado
@@ -174,6 +173,79 @@ def save(arquivos):
                     cursor.execute(sql, insert)
                     connection.commit()
 
+            bens = body.get("bens")
+            if (bens):
+                for ben in bens:
+                    sql = """INSERT INTO bens(
+                                dataultimaatualizacao, descricao, 
+                                descricaodetipodebem, ordem, 
+                                valor, id_candidato_bens)
+                             VALUES ( %s, %s, %s, %s, %s, %s);"""
+
+                    insert = (ben.get("dataUltimaAtualizacao"), ben.get("descricao"),
+                              ben.get("descricaoDeTipoDeBem"), ben.get("ordem"),
+                              ben.get("valor"),body.get("id"))
+
+                    cursor.execute(sql, insert)
+                    connection.commit()
+
+
+            eleicao = body.get("eleicao")
+            if(eleicao):
+                sql = """INSERT INTO eleicao(
+                             id, siglauf, 
+                            localidadesgue, ano, 
+                            codigo, nomeeleicao, 
+                            tipoeleicao, turno, 
+                            tipoabrangencia, dataeleicao, 
+                            codsituacaoeleicao, descricaosituacaoeleicao, 
+                            descricaoeleicao, id_candidato)
+                            VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+
+                insert = (eleicao.get("id"), body.get("id"), eleicao.get("siglaUF"), eleicao.get("localidadeSgUe"),
+                          eleicao.get("ano"), eleicao.get("codigo"),
+                          eleicao.get("nomeEleicao"), eleicao.get("tipoEleicao"),
+                          eleicao.get("turno"), eleicao.get("tipoAbrangencia"),
+                          eleicao.get("dataEleicao"),eleicao.get("codSituacaoEleicao"),
+                          eleicao.get("descricaoSituacaoEleicao"),eleicao.get("descricaoEleicao"))
+
+                cursor.execute(sql, insert)
+                connection.commit()
+
+
+            arquivos = body.get("arquivos")
+            if(arquivos):
+                for arquivo in arquivos:
+                    sql = """INSERT INTO arquivos(
+                                nome, url, 
+                                tipo, codtipo, 
+                                fullfilepath, fileinputstream, 
+                                filebytearray, id_candidato_arquivos)
+                             VALUES ( %s, %s, %s, %s, %s, %s, %s, %s);"""
+
+                    insert = (arquivo.get("nome"), arquivo.get("url"),arquivo.get("tipo"),
+                              arquivo.get("codTipo"), arquivo.get("fullFilePath"),
+                              arquivo.get("fileInputStream"), arquivo.get("fileByteArray"),
+                              body.get("id"))
+
+                    cursor.execute(sql, insert)
+                    connection.commit()
+
+            substituto = body.get("substituto")
+            if(substituto):
+                sql = """INSERT INTO substituto(
+                             sqeleicao, sqcandidato, 
+                             sgue, nrano, 
+                             nmcandidato, url, 
+                             id_Candidato)
+                            VALUES ( %s, %s, %s, %s, %s, %s, %s);"""
+
+                insert = (substituto.get("sqEleicao"), substituto.get("sqCandidato"), substituto.get("sgUe"),
+                          substituto.get("nrAno"), substituto.get("nmCandidato"),
+                          substituto.get("url"),body.get("id"))
+
+                cursor.execute(sql, insert)
+                connection.commit()
 
     except psycopg2.Error as error:
         if(connection):
