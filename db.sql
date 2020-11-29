@@ -16,9 +16,9 @@ insert into cargo(idcargo, cargo) values(9,'Vereador');
 
 create table if not exists candidato_cargo(
 
-    id_cargo_candidato serial primary key,
-    id_candidato_cargo bigint,    -- id do candidato
-    id_candidato_cargo_cargo int, -- id do cargo
+    id_candidato_cargo serial primary key,
+    id_candidato bigint,    -- id do candidato
+    id_cargo int, -- id do cargo
     sigla varchar(10),
     codSuperior int,
     titular boolean,
@@ -50,9 +50,9 @@ create table if not exists vice(
 	nm_CANDIDATO VARCHAR(100),
 	nm_PARTIDO varchar(50),
 	nm_URNA varchar(50),
-	nomeColigacao varchar(50),
+	nomeColigacao varchar(100),
 	nr_CANDIDATO integer,
-	sg_PARTIDO varchar(10),
+	sg_PARTIDO varchar(20),
 	sg_UE integer,
 	situacaoCandidato varchar(50),
 	sq_CANDIDATO bigint,
@@ -110,7 +110,7 @@ create table if not exists eleicoesanteriores(
 	ideleicaoesanteriores serial primary key,
 	cargo varchar(30),
 	ideleicao bigint,
-	id_candidato_eleicoes_anteriores bigint, -- adicionada por conta
+	id_candidato_eleicoes_anteriores bigint, -- vinculo tabela principal
 	local varchar(150),
 	nomeCandidato varchar(150),
 	nomeUrna varchar(150),
@@ -208,7 +208,7 @@ create table if not exists candidatos(
    idpartido int,
    totalDeBens real,
    id_eleicao_candidato int,
-   substituto varchar(200),
+   --substituto varchar(200), essa na verdade é um array
    motivos varchar(200),
    codigoSituacaoCandidato int,
    descricaoSituacaoCandidato varchar(20),
@@ -230,3 +230,22 @@ create table if not exists candidatos(
    st_REELEICAO boolean
 
 );
+
+create table if not exists substituto(
+
+   id serial primary key,
+   sqEleicao int,
+   sqCandidato int,
+   sgUe varchar(20),
+   nrAno int,
+   nmCandidato varchar(70),
+   url varchar(200),
+   id_Candidato INT
+);
+
+delete from candidatos;
+delete from candidato_cargo;
+delete from emails;
+delete from sites;
+delete from vice;
+delete from eleicoesanteriores;
