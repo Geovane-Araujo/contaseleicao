@@ -4,12 +4,12 @@ import psycopg2
 
 from flask import Flask
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 path = "E:\\candidatos"
 
 
-@app.route('/politiciansdata')
+#@app.route('/politiciansdata')
 def divudacaoconta():
 
     arquivos = listarArquivos()
@@ -260,4 +260,5 @@ def save(arquivos):
 
 
 if __name__ == '__main__':
-    app.run()
+    divudacaoconta()
+    #app.run()
