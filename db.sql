@@ -221,7 +221,7 @@ create table if not exists candidatos(
    gastoCampanha real,
    st_MOTIVO_ABUSO_PODER boolean,
    st_MOTIVO_COMPRA_VOTO boolean,
-   ds_MOTIVO_OUTROS boolean,
+   ds_MOTIVO_OUTROS varchar,
    st_MOTIVO_GASTO_ILICITO boolean,
    st_MOTIVO_IND_PARTIDO boolean,
    st_MOTIVO_FICHA_LIMPA boolean,
